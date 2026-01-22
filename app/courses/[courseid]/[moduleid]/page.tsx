@@ -267,8 +267,7 @@ export default function LessonPage() {
                   <div className="flex flex-wrap gap-2 bg-white rounded-lg p-4 shadow-md border border-gray-200">
                     {[
                       { id: 'intro', label: getText('Introduction', 'परिचय'), icon: BookOpen },
-                      { id: 'learn', label: getText('Learn', 'सिक्नुहोस्'), icon: Volume2, badge: introductoryMCQs.length },
-                      { id: 'pdf', label: getText('Notes', 'नोट्स'), icon: BookOpen, disabled: !pdfResource },
+                      { id: 'pdf', label: getText('Notes & MCQs', 'नोट्स र प्रश्नहरु'), icon: BookOpen, disabled: !pdfResource },
                       { id: 'assessment', label: getText('Assessment', 'मूल्यांकन'), icon: CheckCircle, badge: assessmentMCQs.length },
                     ].map(({ id, label, icon: Icon, badge, disabled }) => (
                       <button
@@ -323,52 +322,7 @@ export default function LessonPage() {
                     </div>
                   )}
 
-                  {currentTab === 'learn' && introductoryMCQs.length > 0 && (
-                    <div className="space-y-4">
-                      {introductoryMCQs.map((mcq, index) => (
-                        <div key={mcq.id} className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-                          <h3 className="font-bold text-gray-800 mb-4">
-                            {getText(`Question ${index + 1}`, `प्रश्न ${index + 1}`)} - {getText(mcq.question_en, mcq.question_ne)}
-                          </h3>
-                          <div className="space-y-3">
-                            {[
-                              { key: 'a', en: mcq.option_a_en, ne: mcq.option_a_ne },
-                              { key: 'b', en: mcq.option_b_en, ne: mcq.option_b_ne },
-                              { key: 'c', en: mcq.option_c_en, ne: mcq.option_c_ne },
-                              { key: 'd', en: mcq.option_d_en, ne: mcq.option_d_ne },
-                            ].map(({ key, en, ne }) => (
-                              <label key={key} className="flex items-center p-3 rounded border border-gray-300 cursor-pointer hover:bg-gray-50">
-                                <input
-                                  type="radio"
-                                  name={mcq.id}
-                                  value={key}
-                                  checked={selectedAnswers[mcq.id] === key}
-                                  onChange={(e) => setSelectedAnswers({ ...selectedAnswers, [mcq.id]: e.target.value })}
-                                  className="w-4 h-4"
-                                />
-                                <span className="ml-3 text-gray-700">{getText(en, ne)}</span>
-                              </label>
-                            ))}
-                          </div>
 
-                          {selectedAnswers[mcq.id] && (
-                            <div className={`mt-4 p-4 rounded ${
-                              selectedAnswers[mcq.id]?.toLowerCase() === mcq.correct_answer.toLowerCase()
-                                ? 'bg-green-50 border-l-4 border-green-600'
-                                : 'bg-yellow-50 border-l-4 border-yellow-600'
-                            }`}>
-                              <p className="font-semibold text-gray-800 mb-2">
-                                {selectedAnswers[mcq.id]?.toLowerCase() === mcq.correct_answer.toLowerCase()
-                                  ? getText('Correct!', 'सही!')
-                                  : getText('Explanation', 'व्याख्या')}
-                              </p>
-                              <p className="text-gray-700 text-sm">{getText(mcq.explanation_en, mcq.explanation_ne)}</p>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
 
                   {currentTab === 'pdf' && pdfResource && (
                     <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
