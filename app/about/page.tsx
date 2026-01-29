@@ -192,9 +192,7 @@ export default function AboutPage() {
 
               <Card className="overflow-hidden hover:shadow-md transition-all">
                 <Image
-                  src={
-                    "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_YNWsB52TBODmpxuA02CXLsKnL4vYoHKfn8EN5aSEfF0Q3nmD2oI9PvN1GfW_uZhghTK1IjOekve6z-2JOnhb2VUqWfHrDq1_Qy1_Kvy0v5_RxrpZU8UHN5t0zywVhROEzBCq1VWwEfNrm2hKui_0C3ZwNMeskFmDCY3I_m17O5Vb0yXMRv2ZqWsu9TI/s320/IMG_20250418_095043_879.jpg"
-                  }
+                  src="/images/design-mode/IMG_20250418_095043_879.jpg"
                   alt="Samir Ghimire - Content Strategist"
                   width={300}
                   height={300}
@@ -230,9 +228,7 @@ export default function AboutPage() {
 
               <Card className="overflow-hidden hover:shadow-md transition-all">
                 <Image
-                  src={
-                    "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCc3jx_71VXtuHiVHJA6fHAWAK4XmLUVyLIyTqnnTPdeVAZOTslnMo6Br2LMUebmfH5IBIxjdcbc1RFatgiu2kFVn8TLp5Z60Jsby1mHRVSL84l0rYJzt9PuA_hh3-CWOdrQjbsGtlgGLP9wdb7Zy0WogJxNeAAtaEZGeqY8I99Vf2z2TmLe2CdrgHFbI/s320/IMG_20250418_095100_827.jpg"
-                  }
+                  src="/images/design-mode/IMG_20250418_095100_827.jpg"
                   alt="Samraj Budhathoki - Creative Designer"
                   width={300}
                   height={300}
