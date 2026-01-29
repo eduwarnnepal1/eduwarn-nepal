@@ -164,7 +164,7 @@ export default function AboutPage() {
                 />
                 <CardContent className="p-6">
                   <h3 className="font-bold text-xl mb-1">Sabin Budhathoki</h3>
-                  <p className="text-blue-600 text-sm mb-3">Educational Visionary</p>
+                  <p className="text-blue-600 text-sm mb-3">Visionary Teacher</p>
                   <p className="text-gray-600 text-sm mb-4">
                     Passionate about making quality education accessible to everyone, Sabin leads our vision and
                     strategic direction.
@@ -192,7 +192,9 @@ export default function AboutPage() {
 
               <Card className="overflow-hidden hover:shadow-md transition-all">
                 <Image
-                  src="/images/design-mode/IMG_20250418_095043_879.jpg"
+                  src={
+                    "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_YNWsB52TBODmpxuA02CXLsKnL4vYoHKfn8EN5aSEfF0Q3nmD2oI9PvN1GfW_uZhghTK1IjOekve6z-2JOnhb2VUqWfHrDq1_Qy1_Kvy0v5_RxrpZU8UHN5t0zywVhROEzBCq1VWwEfNrm2hKui_0C3ZwNMeskFmDCY3I_m17O5Vb0yXMRv2ZqWsu9TI/s320/IMG_20250418_095043_879.jpg"
+                  }
                   alt="Samir Ghimire - Content Strategist"
                   width={300}
                   height={300}
@@ -216,41 +218,6 @@ export default function AboutPage() {
                     </Link>
                     <Link
                       href="https://wa.me/9766908406"
-                      target="_blank"
-                      className="flex items-center text-sm text-green-600 hover:underline"
-                    >
-                      <Phone className="h-4 w-4 mr-1" />
-                      WhatsApp
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="overflow-hidden hover:shadow-md transition-all">
-                <Image
-                  src="/images/design-mode/IMG_20250418_095100_827.jpg"
-                  alt="Samraj Budhathoki - Creative Designer"
-                  width={300}
-                  height={300}
-                  className="w-full h-[300px] object-cover"
-                />
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-xl mb-1">Samraj Budhathoki</h3>
-                  <p className="text-blue-600 text-sm mb-3">Creative Designer</p>
-                  <p className="text-gray-600 text-sm mb-4">
-                    Specializes in creating visual designs that make complex topics easier to understand and remember.
-                  </p>
-                  <div className="flex space-x-3">
-                    <Link
-                      href="https://www.facebook.com/samraz.budathoki.1"
-                      target="_blank"
-                      className="flex items-center text-sm text-blue-600 hover:underline"
-                    >
-                      <Facebook className="h-4 w-4 mr-1" />
-                      Facebook
-                    </Link>
-                    <Link
-                      href="https://wa.me/9865438982"
                       target="_blank"
                       className="flex items-center text-sm text-green-600 hover:underline"
                     >
