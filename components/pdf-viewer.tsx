@@ -67,7 +67,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
       <div className="w-full bg-gray-50 overflow-auto" style={{ maxHeight: '600px' }}>
         <div style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'top center' }} className="transition-transform">
           <iframe
-            src={url}
+            src={`${url}#zoom=${zoom}&view=FitH`}
             width="100%"
             height="600"
             style={{ border: 'none', minWidth: '800px' }}

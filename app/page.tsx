@@ -11,7 +11,7 @@ import Link from "next/link"
 // MOCK data for the home page preview
 const FEATURED_COURSES = [
   {
-    id: "e39ab846-6202-4c8a-b4f9-61db5075035c",
+    id: "1",
     title: "Introduction to Computer Science",
     title_ne: "कम्प्युटर विज्ञानको परिचय",
     description: "Learn the fundamentals of computing and algorithms.",
