@@ -14,6 +14,7 @@ import { YouTubePreview } from '@/components/youtube-preview';
 import { WhyEduWarn } from '@/components/why-eduwarn';
 import { PartnersSection } from '@/components/partners-section';
 import { TestimonialsSection } from '@/components/testimonials-section';
+import { Quote } from '@/components/quote'; // Import Quote component
 
 interface Course {
   id: string;
@@ -87,36 +88,35 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-red-500 to-blue-700 text-white py-20 md:py-32">
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-red-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-            <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
-          </div>
-
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+        {/* Hero Section - Modern Clean Design */}
+        <section className="relative bg-white py-20 md:py-32 border-b border-gray-100">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl">
+              <div className="inline-block mb-6">
+                <span className="text-sm font-semibold text-red-600 bg-red-50 px-4 py-2 rounded-full">
+                  {getText('Empowering Students Across Nepal', 'नेपालभरि विद्यार्थीहरूलाई सशक्त बनाउँदै')}
+                </span>
+              </div>
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
                 {getText('Learn. Grow. Succeed.', 'सिक्नुहोस्। बढ्नुहोस्। सफल होनुहोस्।')}
               </h1>
-              <p className="text-xl md:text-2xl text-blue-100 mb-8">
+              <p className="text-xl text-gray-600 mb-8 max-w-2xl leading-relaxed">
                 {getText(
-                  'Free online learning platform for SEE preparation, science, mathematics, and computer science in Nepal. Join thousands of students on their journey to success.',
-                  'नेपालमा SEE तयारी, विज्ञान, गणित, र कम्प्युटर विज्ञानको लागि मुक्त अनलाइन शिक्षण मञ्च। हजारौं विद्यार्थीहरूसँग आपनो सफलताको यात्रामा सामेल हुनुहोस्।'
+                  'Free online learning platform for SEE preparation, science, mathematics, and computer science. Join thousands of students on their path to success.',
+                  'SEE तयारी, विज्ञान, गणित, र कम्प्युटर विज्ञानको लागि मुक्त अनलाइन शिक्षण मञ्च। हजारौं विद्यार्थीहरूसँग सफलताको पथमा जोडिनुहोस्।'
                 )}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   asChild
-                  className="bg-white text-red-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-bold text-lg"
+                  className="bg-red-600 text-white hover:bg-red-700 px-8 py-3 font-semibold text-base rounded-lg transition-colors"
                 >
                   <Link href="/courses">{getText('Explore Courses', 'कोर्सहरू अन्वेषण गर्नुहोस्')}</Link>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
-                  className="border-white text-white hover:bg-white/10 px-8 py-3 rounded-lg font-bold text-lg bg-transparent"
+                  className="border-2 border-gray-300 text-gray-900 hover:border-red-600 hover:text-red-600 px-8 py-3 font-semibold text-base rounded-lg transition-all bg-transparent"
                 >
                   <Link href="/blog">{getText('Read Our Blog', 'हाम्रो ब्लग पढ्नुहोस्')}</Link>
                 </Button>
@@ -125,42 +125,45 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Rotating Quotes Section */}
+        {/* Rotating Quotes Section - Clean Modern */}
         {quotes.length > 0 && (
-          <section className="bg-gradient-to-r from-red-600 to-blue-600 text-white py-12">
+          <section className="bg-gray-50 py-16 border-y border-gray-200">
             <div className="container mx-auto px-4">
-              <div className="flex items-center gap-4 md:gap-8">
-                <img src="/quote-icon.svg" className="w-8 h-8 md:w-12 md:h-12 flex-shrink-0" />
-                <div className="min-h-20 flex flex-col justify-center">
-                  <p className="text-lg md:text-2xl font-semibold italic mb-2">
-                    "{getText(quotes[currentQuote].content_en, quotes[currentQuote].content_ne)}"
-                  </p>
-                  {(quotes[currentQuote].author_en || quotes[currentQuote].author_ne) && (
-                    <p className="text-blue-100 text-sm">
-                      - {getText(quotes[currentQuote].author_en || '', quotes[currentQuote].author_ne || '')}
+              <div className="max-w-3xl mx-auto">
+                <div className="flex gap-4 md:gap-6">
+                  <Quote className="w-8 h-8 text-red-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <p className="text-lg md:text-xl font-semibold text-gray-900 mb-3 italic">
+                      "{getText(quotes[currentQuote].content_en, quotes[currentQuote].content_ne)}"
                     </p>
-                  )}
+                    {(quotes[currentQuote].author_en || quotes[currentQuote].author_ne) && (
+                      <p className="text-gray-600 text-sm font-medium">
+                        — {getText(quotes[currentQuote].author_en || '', quotes[currentQuote].author_ne || '')}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="flex gap-2 mt-6 justify-center">
-                {quotes.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentQuote(idx)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      idx === currentQuote ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/75'
-                    }`}
-                  />
-                ))}
+                <div className="flex gap-2 mt-8 justify-center">
+                  {quotes.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentQuote(idx)}
+                      className={`h-2 rounded-full transition-all ${
+                        idx === currentQuote ? 'bg-red-600 w-8' : 'bg-gray-300 hover:bg-gray-400 w-2'
+                      }`}
+                      aria-label={`Quote ${idx + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </section>
         )}
 
-        {/* Stats Section */}
-        <section className="bg-gray-50 py-16">
+        {/* Stats Section - Clean Cards */}
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 { icon: Users, label: getText('Active Students', 'सक्रिय विद्यार्थीहरू'), value: '10,000+' },
                 { icon: BookOpen, label: getText('Courses Available', 'उपलब्ध कोर्सहरू'), value: '50+' },
@@ -169,12 +172,10 @@ export default function Home() {
               ].map((stat, idx) => {
                 const Icon = stat.icon;
                 return (
-                  <div key={idx} className="text-center">
-                    <div className="flex justify-center mb-4">
-                      <Icon className="w-12 h-12 text-red-600" />
-                    </div>
-                    <p className="text-3xl font-bold text-gray-800 mb-2">{stat.value}</p>
-                    <p className="text-gray-600">{stat.label}</p>
+                  <div key={idx} className="p-6 border border-gray-200 rounded-xl hover:border-red-200 hover:shadow-md transition-all">
+                    <Icon className="w-10 h-10 text-red-600 mb-4" />
+                    <p className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</p>
+                    <p className="text-gray-600 text-sm">{stat.label}</p>
                   </div>
                 );
               })}
@@ -347,22 +348,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Final CTA Section */}
-        <section className="bg-gradient-to-r from-blue-600 to-red-600 text-white py-16">
+        {/* Final CTA Section - Clean Modern */}
+        <section className="bg-gray-900 text-white py-16 md:py-20">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
               {getText('Ready to Start Learning?', 'सिक्न तयार हुनुहुन्छ?')}
             </h2>
-            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
               {getText(
-                'Join our community of learners and ace your exams. Start for free today!',
-                'हाम्रो विद्यार्थीहरूको समुदायमा सामेल हुनुहोस् र आपनो परीक्षा पास गर्नुहोस्। आज मुक्त रूपमा सुरु गर्नुहोस्!'
+                'Join thousands of students and ace your exams. Start your free learning journey today!',
+                'हजारौं विद्यार्थीहरूसँग जोडिनुहोस् र आपनो परीक्षा पास गर्नुहोस्। आज मुक्त रूपमा सुरु गर्नुहोस्!'
               )}
             </p>
             <Button
               asChild
               size="lg"
-              className="bg-white text-red-600 hover:bg-gray-100 font-bold"
+              className="bg-red-600 text-white hover:bg-red-700 px-8 font-semibold text-base"
             >
               <Link href="/auth/register">{getText('Sign Up Free', 'मुक्त साइन अप गर्नुहोस्')}</Link>
             </Button>
