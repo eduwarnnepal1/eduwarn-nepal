@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { LanguageContext } from '@/context/language-context';
 import { createBrowserClient } from '@supabase/ssr';
-import { Loader } from 'lucide-react';
-import { Icon as Icons } from 'lucide-react';
+import { Loader, Users, Zap, DollarSign, Clock, Award, Headphones, Star } from 'lucide-react';
+import Icons from 'path-to-icons-package'; // Import the Icons package
 
 interface WhyEduwarnItem {
   id: string;
@@ -52,14 +52,14 @@ export function WhyEduWarn() {
 
   const getIcon = (iconName: string) => {
     const iconMap: Record<string, React.ComponentType<any>> = {
-      Users: Icons.Users,
-      Zap: Icons.Zap,
-      DollarSign: Icons.DollarSign,
-      Clock: Icons.Clock,
-      Award: Icons.Award,
-      Headphones: Icons.Headphones,
+      Users,
+      Zap,
+      DollarSign,
+      Clock,
+      Award,
+      Headphones,
     };
-    return iconMap[iconName] || Icons.Star;
+    return iconMap[iconName] || Star;
   };
 
   if (loading) {
