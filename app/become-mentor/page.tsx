@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Users, Award, BookOpen, Heart, Lightbulb, TrendingUp } from 'lucide-react';
+import { createBrowserClient } from '@supabase/ssr';
 
 const translations = {
   en: {
@@ -128,18 +129,27 @@ export default function BecomeMentorPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/forms/mentor', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to submit application');
-      }
+      const { data: session } = await supabase.auth.getSession();
+
+      const { error: submitError } = await supabase
+        .from('volunteer_applications')
+        .insert({
+          user_id: session?.user?.id || null,
+          full_name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          expertise_areas: [formData.expertise],
+          experience_years: parseInt(formData.experience) || 0,
+          motivation: formData.bio,
+          status: 'pending',
+        });
+
+      if (submitError) throw submitError;
 
       setSubmitted(true);
       setFormData({
