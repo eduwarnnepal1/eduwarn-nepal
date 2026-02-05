@@ -1,5 +1,11 @@
+-- Drop existing forum tables if they exist to start fresh
+DROP TABLE IF EXISTS forum_post_likes CASCADE;
+DROP TABLE IF EXISTS forum_posts CASCADE;
+DROP TABLE IF EXISTS forum_threads CASCADE;
+DROP TABLE IF EXISTS forum_categories CASCADE;
+
 -- Forum Categories Table
-CREATE TABLE IF NOT EXISTS forum_categories (
+CREATE TABLE forum_categories (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name_en TEXT NOT NULL,
   name_ne TEXT NOT NULL,
@@ -12,7 +18,7 @@ CREATE TABLE IF NOT EXISTS forum_categories (
 );
 
 -- Forum Threads Table
-CREATE TABLE IF NOT EXISTS forum_threads (
+CREATE TABLE forum_threads (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   category_id UUID NOT NULL REFERENCES forum_categories(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -26,20 +32,19 @@ CREATE TABLE IF NOT EXISTS forum_threads (
 );
 
 -- Forum Posts Table
-CREATE TABLE IF NOT EXISTS forum_posts (
+CREATE TABLE forum_posts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  thread_id UUID NOT NULL,
+  thread_id UUID NOT NULL REFERENCES forum_threads(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   content TEXT NOT NULL,
   likes INT DEFAULT 0,
   is_answer BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW(),
-  CONSTRAINT fk_forum_posts_thread FOREIGN KEY (thread_id) REFERENCES forum_threads(id) ON DELETE CASCADE
+  updated_at TIMESTAMP DEFAULT NOW()
 );
 
 -- Forum Post Likes Table
-CREATE TABLE IF NOT EXISTS forum_post_likes (
+CREATE TABLE forum_post_likes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   post_id UUID NOT NULL REFERENCES forum_posts(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -48,11 +53,11 @@ CREATE TABLE IF NOT EXISTS forum_post_likes (
 );
 
 -- Create Indexes
-CREATE INDEX IF NOT EXISTS idx_forum_threads_category ON forum_threads(category_id);
-CREATE INDEX IF NOT EXISTS idx_forum_threads_user ON forum_threads(user_id);
-CREATE INDEX IF NOT EXISTS idx_forum_posts_thread ON forum_posts(thread_id);
-CREATE INDEX IF NOT EXISTS idx_forum_posts_user ON forum_posts(user_id);
-CREATE INDEX IF NOT EXISTS idx_forum_post_likes_user ON forum_post_likes(user_id);
+CREATE INDEX idx_forum_threads_category ON forum_threads(category_id);
+CREATE INDEX idx_forum_threads_user ON forum_threads(user_id);
+CREATE INDEX idx_forum_posts_thread ON forum_posts(thread_id);
+CREATE INDEX idx_forum_posts_user ON forum_posts(user_id);
+CREATE INDEX idx_forum_post_likes_user ON forum_post_likes(user_id);
 
 -- Insert Sample Categories
 INSERT INTO forum_categories (name_en, name_ne, description_en, description_ne, icon, order_index) 
@@ -62,8 +67,7 @@ VALUES
 ('Study Resources', 'अध्ययन स्रोतहरू', 'Share and discuss study resources', 'अध्ययन स्रोतहरू साझा गरें र छलफल गरें', '📚', 3),
 ('Exam Preparation', 'परीक्षा तयारी', 'SEE and other exam preparation', 'SEE र अन्य परीक्षा तयारी', '📝', 4),
 ('Doubt Resolution', 'संदेह समाधान', 'Ask and resolve academic doubts', 'शैक्षिक संदेह सोध्नुहोस् र समाधान गरें', '❓', 5),
-('Success Stories', 'सफलता कथाहरू', 'Share your success stories', 'आपनो सफलता कथाहरू साझा गर्नुहोस्', '⭐', 6)
-ON CONFLICT DO NOTHING;
+('Success Stories', 'सफलता कथाहरू', 'Share your success stories', 'आपनो सफलता कथाहरू साझा गर्नुहोस्', '⭐', 6);
 
 -- Enable RLS
 ALTER TABLE forum_categories ENABLE ROW LEVEL SECURITY;
