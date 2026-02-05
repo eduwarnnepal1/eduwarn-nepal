@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { CheckCircle, Users, Zap, Globe, Heart, TrendingUp } from 'lucide-react';
+import { createBrowserClient } from '@supabase/ssr';
 
 const translations = {
   en: {
@@ -106,18 +107,25 @@ export default function PartnerWithUsPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/forms/partner', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to submit form');
-      }
+      const { data: session } = await supabase.auth.getSession();
+
+      const { error: submitError } = await supabase
+        .from('partnership_applications')
+        .insert({
+          user_id: session?.user?.id || null,
+          company_name: formData.organization,
+          contact_email: formData.email,
+          partnership_type: formData.partnershipType,
+          proposal: formData.message,
+          status: 'pending',
+        });
+
+      if (submitError) throw submitError;
 
       setSubmitted(true);
       setFormData({

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { ZoomIn, ZoomOut, Download, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { ZoomIn, ZoomOut, Download, FileText, ExternalLink } from 'lucide-react';
 
 interface PDFViewerProps {
   url: string;
@@ -22,63 +22,86 @@ export function PDFViewer({ url }: PDFViewerProps) {
     const link = document.createElement('a');
     link.href = url;
     link.download = 'study-notes.pdf';
-    link.target = '_blank';
     link.click();
   };
 
   return (
-    <div className="w-full bg-white rounded-lg overflow-hidden shadow-lg border border-gray-200">
-      <div className="bg-gradient-to-r from-red-600 to-blue-600 text-white p-4 flex items-center justify-between flex-wrap gap-4 sticky top-0 z-10">
-        <h3 className="font-semibold flex items-center gap-2">
+    <div className="w-full h-full bg-white rounded-lg overflow-hidden shadow-lg border border-gray-200 flex flex-col">
+      {/* Toolbar */}
+      <div className="bg-gradient-to-r from-red-600 to-blue-600 text-white p-3 flex items-center justify-between flex-wrap gap-3 sticky top-0 z-10">
+        <h3 className="font-semibold flex items-center gap-2 text-sm">
           <FileText className="w-5 h-5" />
-          Study Notes
+          PDF Viewer
         </h3>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handleZoomOut}
-            className="p-2 rounded hover:bg-white/20 transition"
-            title="Zoom out"
-          >
-            <ZoomOut className="w-5 h-5" />
-          </button>
-          <span className="text-sm font-medium w-12 text-center">{zoom}%</span>
-          <button
-            onClick={handleZoomIn}
-            className="p-2 rounded hover:bg-white/20 transition"
-            title="Zoom in"
-          >
-            <ZoomIn className="w-5 h-5" />
-          </button>
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1 bg-white/20 rounded p-1">
+            <button
+              onClick={handleZoomOut}
+              className="p-1 rounded hover:bg-white/20 transition"
+              aria-label="Zoom out"
+            >
+              <ZoomOut className="w-4 h-4" />
+            </button>
+            <span className="text-xs font-medium w-10 text-center">{zoom}%</span>
+            <button
+              onClick={handleZoomIn}
+              className="p-1 rounded hover:bg-white/20 transition"
+              aria-label="Zoom in"
+            >
+              <ZoomIn className="w-4 h-4" />
+            </button>
+          </div>
 
-          <div className="border-l border-white/30 mx-2" />
+          <div className="border-l border-white/30 h-5" />
 
           <button
             onClick={handleDownload}
-            className="p-2 rounded hover:bg-white/20 transition flex items-center gap-2"
+            className="p-1 rounded hover:bg-white/20 transition flex items-center gap-1"
             title="Download PDF"
+            aria-label="Download PDF"
           >
-            <Download className="w-5 h-5" />
-            <span className="text-sm font-medium hidden sm:inline">Download</span>
+            <Download className="w-4 h-4" />
+            <span className="text-xs font-medium hidden sm:inline">Download</span>
           </button>
+
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-1 rounded hover:bg-white/20 transition flex items-center gap-1"
+            title="Open in new tab"
+            aria-label="Open in new tab"
+          >
+            <ExternalLink className="w-4 h-4" />
+          </a>
         </div>
       </div>
 
-      <div className="w-full bg-gray-50 overflow-auto" style={{ maxHeight: '600px' }}>
-        <div style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'top center' }} className="transition-transform">
-          <iframe
+      {/* PDF Container */}
+      <div className="flex-1 overflow-auto bg-gray-50 flex items-start justify-center py-4">
+        <div 
+          style={{ 
+            transform: `scale(${zoom / 100})`,
+            transformOrigin: 'top center',
+            transition: 'transform 200ms ease-out'
+          }}
+          className="bg-white shadow-md"
+        >
+          <embed
             src={url}
-            width="100%"
-            height="600"
-            style={{ border: 'none', minWidth: '800px' }}
-            title="PDF Viewer"
-            className="bg-white"
+            type="application/pdf"
+            width="800"
+            height="1000"
+            title="PDF Document"
+            className="w-full"
           />
         </div>
       </div>
 
-      <div className="bg-gray-100 border-t border-gray-200 px-4 py-2 text-center text-xs text-gray-600">
-        PDF Viewer - Use zoom controls to adjust view size
+      {/* Footer */}
+      <div className="bg-gray-100 border-t border-gray-200 px-3 py-2 text-center text-xs text-gray-600">
+        Use zoom controls to resize • Right-click to save or print
       </div>
     </div>
   );

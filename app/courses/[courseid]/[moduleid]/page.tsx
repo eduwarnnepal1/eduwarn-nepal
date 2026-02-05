@@ -263,7 +263,7 @@ export default function LessonPage() {
                     </p>
                   </div>
 
-                  {/* Tab Navigation */}
+                  {/* Tab Navigation - Removed Learn Tab */}
                   <div className="flex flex-wrap gap-2 bg-white rounded-lg p-4 shadow-md border border-gray-200">
                     {[
                       { id: 'intro', label: getText('Introduction', 'परिचय'), icon: BookOpen },
@@ -295,13 +295,31 @@ export default function LessonPage() {
 
                   {/* Tab Content */}
                   {currentTab === 'intro' && (
-                    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-8">
-                      <p className="text-gray-700 leading-relaxed text-lg mb-6">
-                        {getText(selectedLesson.introduction_en, selectedLesson.introduction_ne)}
-                      </p>
+                    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-8 space-y-6">
+                      {/* Prerequisites Section - Now showing from admin/supabase */}
+                      {selectedLesson.prerequisites_en || selectedLesson.prerequisites_ne ? (
+                        <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded">
+                          <h4 className="font-bold text-blue-900 mb-3 flex items-center gap-2">
+                            <AlertCircle className="w-5 h-5" />
+                            {getText('Prerequisites', 'पूर्वशर्तहरु')}
+                          </h4>
+                          <p className="text-blue-800 text-sm">
+                            {getText(selectedLesson.prerequisites_en || 'No prerequisites', selectedLesson.prerequisites_ne || 'कुनै पूर्वशर्तहरु छैनन्')}
+                          </p>
+                        </div>
+                      ) : null}
 
+                      {/* Introduction */}
+                      <div>
+                        <h3 className="text-xl font-bold mb-3 text-gray-800">{getText('Introduction', 'परिचय')}</h3>
+                        <p className="text-gray-700 leading-relaxed text-lg">
+                          {getText(selectedLesson.introduction_en, selectedLesson.introduction_ne)}
+                        </p>
+                      </div>
+
+                      {/* Video */}
                       {selectedLesson.youtube_url && (
-                        <div className="mt-6">
+                        <div>
                           <h3 className="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">
                             <Volume2 className="w-5 h-5" />
                             {getText('Video Lesson', 'भिडिओ पाठ')}
@@ -316,6 +334,35 @@ export default function LessonPage() {
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                               allowFullScreen
                             />
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Introductory MCQs */}
+                      {introductoryMCQs.length > 0 && (
+                        <div>
+                          <h3 className="text-xl font-bold mb-4 text-gray-800">{getText('Check Your Understanding', 'तपाईंको बुझाइ जाँच गर्नुहोस्')}</h3>
+                          <div className="space-y-4">
+                            {introductoryMCQs.map((mcq, index) => (
+                              <div key={mcq.id} className="bg-gray-50 p-4 rounded border border-gray-200">
+                                <p className="font-semibold text-gray-800 mb-3">
+                                  {getText(`${index + 1}. ${mcq.question_en}`, `${index + 1}. ${mcq.question_ne}`)}
+                                </p>
+                                <div className="space-y-2">
+                                  {[
+                                    { key: 'a', en: mcq.option_a_en, ne: mcq.option_a_ne },
+                                    { key: 'b', en: mcq.option_b_en, ne: mcq.option_b_ne },
+                                    { key: 'c', en: mcq.option_c_en, ne: mcq.option_c_ne },
+                                    { key: 'd', en: mcq.option_d_en, ne: mcq.option_d_ne },
+                                  ].map(({ key, en, ne }) => (
+                                    <label key={key} className="flex items-center p-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 rounded">
+                                      <input type="radio" name={`intro-${mcq.id}`} value={key} className="w-4 h-4 mr-2" />
+                                      {getText(en, ne)}
+                                    </label>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
                           </div>
                         </div>
                       )}

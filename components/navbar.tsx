@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useLanguage } from "@/context/language-context"
-import { Moon, Sun, Menu, X, Globe, UserIcon, Settings, LogOut, Shield } from "lucide-react"
+import { Moon, Sun, Menu, X, Globe, UserIcon, Settings, LogOut, Shield, Home, BookOpen, MessageCircle, FileText, BookMarked } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useState, useEffect } from "react"
 import {
@@ -114,11 +114,11 @@ export function Navbar() {
   }
 
   const navLinks = [
-    { href: "/", label: t("nav.home") },
-    { href: "/courses", label: t("nav.courses") },
-    { href: "/forum", label: t("nav.forum") },
-    { href: "/blog", label: t("nav.blog") },
-    { href: "/resources", label: t("nav.resources") },
+    { href: "/", label: t("nav.home"), icon: Home },
+    { href: "/courses", label: t("nav.courses"), icon: BookOpen },
+    { href: "/forum", label: t("nav.forum"), icon: MessageCircle },
+    { href: "/blog", label: t("nav.blog"), icon: FileText },
+    { href: "/resources", label: t("nav.resources"), icon: BookMarked },
   ]
 
   return (
@@ -133,15 +133,19 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group"
+                >
+                  <Icon className="h-4 w-4 group-hover:text-red-600 transition-colors" />
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Right Actions */}
@@ -268,16 +272,20 @@ export function Navbar() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block py-2 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="flex items-center gap-3 py-2 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Icon className="h-4 w-4" />
+                  {link.label}
+                </Link>
+              );
+            })}
             {!loading && (
               <>
                 {user ? (
