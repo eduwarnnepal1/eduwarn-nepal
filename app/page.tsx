@@ -7,14 +7,13 @@ import { LanguageContext } from '@/context/language-context';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { createBrowserClient } from '@supabase/ssr';
-import { Zap, BookOpen, Users, Trophy, ArrowRight, Loader } from 'lucide-react';
+import { Zap, BookOpen, Users, Trophy, ArrowRight, Loader, Quote } from 'lucide-react';
 import Link from 'next/link';
 import { Carousel } from '@/components/carousel';
 import { YouTubePreview } from '@/components/youtube-preview';
 import { WhyEduWarn } from '@/components/why-eduwarn';
 import { PartnersSection } from '@/components/partners-section';
 import { TestimonialsSection } from '@/components/testimonials-section';
-import { Quote } from '@/components/quote'; // Import Quote component
 
 interface Course {
   id: string;
@@ -200,75 +199,76 @@ export default function Home() {
         )}
 
         {/* Featured Courses Section */}
-        <section className="container mx-auto px-4 py-20">
-          <div className="mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              {getText('Featured Courses', 'मुख्य कोर्सहरू')}
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl">
-              {getText(
-                'Start learning with our most popular courses designed for SEE, Science, Math, and Computer Science students',
-                'SEE, विज्ञान, गणित, र कम्प्युटर विज्ञान विद्यार्थीहरूको लागि डिजाइन गरिएका हाम्रो सबैभन्दा लोकप्रिय कोर्सहरूसँग सिक्न सुरु गर्नुहोस्'
-              )}
-            </p>
-          </div>
-
-          {loading ? (
-            <div className="flex justify-center py-12">
-              <Loader className="w-8 h-8 animate-spin text-red-600" />
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                {getText('Featured Courses', 'मुख्य कोर्सहरू')}
+              </h2>
+              <p className="text-gray-600 text-lg max-w-2xl">
+                {getText(
+                  'Start learning with our most popular courses designed for SEE, Science, Math, and Computer Science students',
+                  'SEE, विज्ञान, गणित, र कम्प्युटर विज्ञान विद्यार्थीहरूको लागि डिजाइन गरिएका हाम्रो सबैभन्दा लोकप्रिय कोर्सहरूसँग सिक्न सुरु गर्नुहोस्'
+                )}
+              </p>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {courses.map((course) => (
-                <Card key={course.id} className="group overflow-hidden hover:shadow-xl transition-all">
-                  <div className="relative aspect-video bg-gradient-to-br from-red-600 to-blue-600 flex items-center justify-center overflow-hidden">
-                    {course.thumbnail_url && (
-                      <img
-                        src={course.thumbnail_url || '/placeholder.svg'}
-                        alt={getText(course.title_en, course.title_ne)}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all" />
-                  </div>
 
-                  <div className="p-6">
-                    <div className="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-semibold mb-3">
-                      {getText(course.level || 'Beginner', 'शुरुआती')}
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <Loader className="w-8 h-8 animate-spin text-red-600" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {courses.map((course) => (
+                  <Card key={course.id} className="group overflow-hidden hover:shadow-lg transition-all border-gray-200 hover:border-red-200">
+                    <div className="relative aspect-video bg-gray-100 flex items-center justify-center overflow-hidden">
+                      {course.thumbnail_url && (
+                        <img
+                          src={course.thumbnail_url || '/placeholder.svg'}
+                          alt={getText(course.title_en, course.title_ne)}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      )}
                     </div>
 
-                    <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-red-600 transition-colors">
-                      {getText(course.title_en, course.title_ne)}
-                    </h3>
+                    <div className="p-6">
+                      <div className="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold mb-3">
+                        {getText(course.level || 'Beginner', 'शुरुआती')}
+                      </div>
 
-                    <p className="text-gray-600 mb-6 line-clamp-2">
-                      {getText(course.description_en, course.description_ne)}
-                    </p>
+                      <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors line-clamp-2">
+                        {getText(course.title_en, course.title_ne)}
+                      </h3>
 
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="text-red-600 hover:text-red-700 p-0 h-auto font-semibold flex items-center gap-2"
-                    >
-                      <Link href={`/courses/${course.id}`}>
-                        {getText('Explore', 'अन्वेषण गर्नुहोस्')}
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </Button>
-                  </div>
-                </Card>
-              ))}
+                      <p className="text-gray-600 text-sm mb-6 line-clamp-2">
+                        {getText(course.description_en, course.description_ne)}
+                      </p>
+
+                      <Button
+                        asChild
+                        variant="ghost"
+                        className="text-red-600 hover:text-red-700 p-0 h-auto font-semibold text-sm flex items-center gap-1"
+                      >
+                        <Link href={`/courses/${course.id}`}>
+                          {getText('Explore', 'अन्वेषण गर्नुहोस्')}
+                          <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+
+            <div className="text-center mt-12">
+              <Button
+                asChild
+                size="lg"
+                className="bg-red-600 text-white hover:bg-red-700 px-8 font-semibold"
+              >
+                <Link href="/courses">{getText('View All Courses', 'सबै कोर्सहरू हेर्नुहोस्')}</Link>
+              </Button>
             </div>
-          )}
-
-          <div className="text-center mt-12">
-            <Button
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-red-600 to-blue-600 text-white hover:shadow-lg"
-            >
-              <Link href="/courses">{getText('View All Courses', 'सबै कोर्सहरू हेर्नुहोस्')}</Link>
-            </Button>
           </div>
         </section>
 
@@ -304,11 +304,14 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Partnership Card */}
-              <Card className="p-8 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 hover:shadow-lg transition-all">
-                <h3 className="text-2xl font-bold text-blue-900 mb-4">
+              <Card className="p-8 bg-white border-2 border-blue-200 hover:shadow-lg hover:border-blue-400 transition-all">
+                <div className="w-12 h-12 bg-blue-50 rounded-lg mb-4 flex items-center justify-center">
+                  <span className="text-xl">🤝</span>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   {getText('Become a Partner', 'साझेदार बन्नुहोस्')}
                 </h3>
-                <p className="text-blue-800 mb-6">
+                <p className="text-gray-600 mb-6">
                   {getText(
                     'Partner with EduWarn to reach thousands of students and expand your impact',
                     'EduWarn सँग साझेदारी गर्नुहोस् र हजारौं विद्यार्थीहरूमा पहुँच गर्नुहोस्'
@@ -325,11 +328,14 @@ export default function Home() {
               </Card>
 
               {/* Volunteer Card */}
-              <Card className="p-8 bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-200 hover:shadow-lg transition-all">
-                <h3 className="text-2xl font-bold text-red-900 mb-4">
+              <Card className="p-8 bg-white border-2 border-red-200 hover:shadow-lg hover:border-red-400 transition-all">
+                <div className="w-12 h-12 bg-red-50 rounded-lg mb-4 flex items-center justify-center">
+                  <span className="text-xl">👨‍🏫</span>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   {getText('Become a Mentor', 'सलाहदाता बन्नुहोस्')}
                 </h3>
-                <p className="text-red-800 mb-6">
+                <p className="text-gray-600 mb-6">
                   {getText(
                     'Help students succeed by sharing your knowledge and experience',
                     'आपनो ज्ञान र अनुभव साझा गरेर विद्यार्थीहरूलाई सफल हुन मद्दत गर्नुहोस्'
