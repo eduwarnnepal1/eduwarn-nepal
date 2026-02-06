@@ -132,7 +132,7 @@ function ForumContent() {
                   filteredPosts.map((post) => (
                     <TableRow key={post.id}>
                       <TableCell className="font-medium max-w-xs truncate">{post.title}</TableCell>
-                      <TableCell>{post.author?.full_name || "Unknown"}</TableCell>
+                      <TableCell>{post.author?.[0].full_name || "Unknown"}</TableCell>
                       <TableCell>{post.is_pinned && <Badge className="bg-blue-600">Pinned</Badge>}</TableCell>
                       <TableCell>{new Date(post.created_at).toLocaleDateString()}</TableCell>
                       <TableCell>
