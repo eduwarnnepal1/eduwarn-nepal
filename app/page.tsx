@@ -105,6 +105,7 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section - Modern Clean Design */}
+        <Hero />
         <section className="relative bg-white py-20 md:py-32 border-b border-gray-100">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
