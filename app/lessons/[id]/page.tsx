@@ -3,7 +3,10 @@ import { cookies } from 'next/headers';
 import { LessonViewer } from '@/components/lesson-viewer';
 import { redirect } from 'next/navigation';
 
-export default async function LessonPage({ params }: { params: { id: string } }) {
+export default async function LessonPage({ params }: { params: Promise< { id: string }> }) {
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
+  
   const cookieStore = await cookies();
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
