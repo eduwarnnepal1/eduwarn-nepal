@@ -14,7 +14,7 @@ import { YouTubePreview } from '@/components/youtube-preview';
 import { WhyEduWarn } from '@/components/why-eduwarn';
 import { PartnersSection } from '@/components/partners-section';
 import { TestimonialsSection } from '@/components/testimonials-section';
-
+import { Hero } from '@/components/hero';
 interface Course {
   id: string;
   title_en: string;
