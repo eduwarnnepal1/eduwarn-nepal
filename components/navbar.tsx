@@ -31,7 +31,6 @@ export function Navbar() {
 
   const fetchProfile = async (userId: string) => {
     try {
-      console.log("[v0] Fetching profile for user:", userId)
       const { data, error } = await supabase
         .from("profiles")
         .select("full_name, avatar_url, role")
@@ -39,14 +38,13 @@ export function Navbar() {
         .single()
 
       if (error) {
-        console.error("[v0] Error fetching profile:", error)
+        console.error("Error fetching profile:", error)
         return null
       }
 
-      console.log("[v0] Profile fetched successfully:", data)
       return data
     } catch (err) {
-      console.error("[v0] Unexpected error fetching profile:", err)
+      console.error("Unexpected error fetching profile:", err)
       return null
     }
   }
@@ -73,7 +71,6 @@ export function Navbar() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log("[v0] Auth state changed:", event, session?.user?.id)
       const currentUser = session?.user ?? null
       setUser(currentUser)
 

@@ -35,6 +35,13 @@ interface LearningEvent {
   event_date?: string;
 }
 
+interface Statistics {
+  total_students: number;
+  total_courses: number;
+  total_success_rate: number;
+  total_learning_hours: number;
+}
+
 export default function Home() {
   const context = useContext(LanguageContext);
   const language = context?.language || 'en';
@@ -43,6 +50,7 @@ export default function Home() {
   const [events, setEvents] = useState<LearningEvent[]>([]);
   const [quotes, setQuotes] = useState<any[]>([]);
   const [currentQuote, setCurrentQuote] = useState(0);
+  const [statistics, setStatistics] = useState<Statistics | null>(null);
   const [loading, setLoading] = useState(true);
 
   const supabase = createBrowserClient(
@@ -55,17 +63,26 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [coursesData, eventsData, quotesData] = await Promise.all([
+        const [coursesData, eventsData, quotesData, statsData] = await Promise.all([
           supabase.from('courses').select('*').limit(6),
           supabase.from('learning_events').select('*').eq('is_active', true),
           supabase.from('quotes').select('*').eq('is_active', true),
+          supabase.from('statistics').select('*').single(),
         ]);
 
         if (coursesData.data) setCourses(coursesData.data);
         if (eventsData.data) setEvents(eventsData.data);
         if (quotesData.data) setQuotes(quotesData.data);
+        if (statsData.data) setStatistics(statsData.data);
       } catch (error) {
         console.error('Error fetching data:', error);
+        // Set fallback stats if table doesn't exist
+        setStatistics({
+          total_students: 0,
+          total_courses: 0,
+          total_success_rate: 0,
+          total_learning_hours: 0,
+        });
       } finally {
         setLoading(false);
       }
@@ -160,27 +177,29 @@ export default function Home() {
         )}
 
         {/* Stats Section - Clean Cards */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { icon: Users, label: getText('Active Students', 'सक्रिय विद्यार्थीहरू'), value: '10,000+' },
-                { icon: BookOpen, label: getText('Courses Available', 'उपलब्ध कोर्सहरू'), value: '50+' },
-                { icon: Trophy, label: getText('Success Rate', 'सफलता दर'), value: '95%' },
-                { icon: Zap, label: getText('Learning Hours', 'शिक्षण घण्टाहरू'), value: '50,000+' },
-              ].map((stat, idx) => {
-                const Icon = stat.icon;
-                return (
-                  <div key={idx} className="p-6 border border-gray-200 rounded-xl hover:border-red-200 hover:shadow-md transition-all">
-                    <Icon className="w-10 h-10 text-red-600 mb-4" />
-                    <p className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</p>
-                    <p className="text-gray-600 text-sm">{stat.label}</p>
-                  </div>
-                );
-              })}
+        {statistics && (
+          <section className="py-20 bg-white">
+            <div className="container mx-auto px-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  { icon: Users, label: getText('Active Students', 'सक्रिय विद्यार्थीहरू'), value: statistics.total_students || 0, suffix: '+' },
+                  { icon: BookOpen, label: getText('Courses Available', 'उपलब्ध कोर्सहरू'), value: statistics.total_courses || 0, suffix: '+' },
+                  { icon: Trophy, label: getText('Success Rate', 'सफलता दर'), value: statistics.total_success_rate || 0, suffix: '%' },
+                  { icon: Zap, label: getText('Learning Hours', 'शिक्षण घण्टाहरू'), value: statistics.total_learning_hours || 0, suffix: '+' },
+                ].map((stat, idx) => {
+                  const Icon = stat.icon;
+                  return (
+                    <div key={idx} className="p-6 border border-gray-200 rounded-xl hover:border-red-200 hover:shadow-md transition-all">
+                      <Icon className="w-10 h-10 text-red-600 mb-4" />
+                      <p className="text-3xl font-bold text-gray-900 mb-2">{stat.value.toLocaleString()}{stat.suffix}</p>
+                      <p className="text-gray-600 text-sm">{stat.label}</p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Learning Events Carousel */}
         {events.length > 0 && (
