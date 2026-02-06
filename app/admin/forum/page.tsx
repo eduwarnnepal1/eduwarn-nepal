@@ -18,6 +18,7 @@ interface ForumPost {
   is_pinned: boolean
   created_at: string
   author?: { full_name: string }[];
+};
 
 function ForumContent() {
   const supabase = createClient()
