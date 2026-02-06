@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline - EduWarn Nepal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+        'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      background: #ffffff;
+      color: #1f2937;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .icon {
+      font-size: 4rem;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #111827;
+    }
+
+    p {
+      font-size: 1.125rem;
+      color: #4b5563;
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    a,
+    button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .button-primary {
+      background-color: #dc2626;
+      color: white;
+    }
+
+    .button-primary:hover {
+      background-color: #b91c1c;
+      transform: translateY(-2px);
+    }
+
+    .button-secondary {
+      background-color: #f3f4f6;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+    }
+
+    .button-secondary:hover {
+      background-color: #e5e7eb;
+    }
+
+    .tips {
+      background-color: #f0f9ff;
+      border-left: 4px solid #0ea5e9;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border-radius: 0.5rem;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .tips h3 {
+      color: #0369a1;
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+    }
+
+    .tips ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .tips li {
+      margin-bottom: 0.5rem;
+      color: #1f2937;
+    }
+
+    .tips li:before {
+      content: '✓ ';
+      color: #0ea5e9;
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .button-group {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      a,
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">📶</div>
+    <h1>You're Offline</h1>
+    <p>It looks like you don't have an internet connection. Some features may not be available right now.</p>
+
+    <div class="button-group">
+      <button class="button-primary" onclick="tryAgain()">Try Again</button>
+      <a href="/" class="button-secondary">Back to Home</a>
+    </div>
+
+    <div class="tips">
+      <h3>What you can still do:</h3>
+      <ul>
+        <li>View previously cached pages</li>
+        <li>Read downloaded content</li>
+        <li>Use offline features</li>
+        <li>Check back when online</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function tryAgain() {
+      window.location.reload();
+    }
+
+    // Check connection status
+    window.addEventListener('online', () => {
+      document.body.innerHTML = '<div class="container"><div class="icon">✓</div><h1>You\'re Back Online!</h1><p>Your connection has been restored.</p><a href="/" class="button-primary" style="display:inline-block;">Continue</a></div>';
+    });
+  </script>
+</body>
+</html>

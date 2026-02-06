@@ -4,6 +4,8 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/context/language-context'
+import { PWAInstaller } from '@/components/pwa-installer'
+import { ServiceWorkerRegistrar } from '@/components/service-worker-registrar'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -64,6 +66,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://eduwarn.com',
   },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'EduWarn Nepal',
+  },
+  metadataBase: new URL('https://eduwarn.com'),
     generator: 'v0.app'
 }
 
@@ -86,8 +95,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="EduWarn" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)" />
+      </head>
       <body className={`font-sans antialiased`}>
-        {/* <CHANGE> Added ThemeProvider and LanguageProvider */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -95,6 +113,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <LanguageProvider>
+            <ServiceWorkerRegistrar />
+            <PWAInstaller />
             {children}
           </LanguageProvider>
         </ThemeProvider>
