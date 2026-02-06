@@ -106,41 +106,17 @@ export default function Home() {
       <main className="flex-1">
         {/* Hero Section - Modern Clean Design */}
         <Hero />
-        <section className="relative bg-white py-20 md:py-32 border-b border-gray-100">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl">
-              <div className="inline-block mb-6">
-                <span className="text-sm font-semibold text-red-600 bg-red-50 px-4 py-2 rounded-full">
-                  {getText('Empowering Students Across Nepal', 'नेपालभरि विद्यार्थीहरूलाई सशक्त बनाउँदै')}
-                </span>
-              </div>
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
-                {getText('Learn. Grow. Decide.', 'सिक्नुहोस्। बढ्नुहोस्। निर्णय गर्नुहोस्')}
-              </h1>
-              <p className="text-xl text-gray-600 mb-8 max-w-2xl leading-relaxed">
-                {getText(
+
+
+
+getText(
                   'Free online learning platform for SEE preparation, science, mathematics, and computer science. Join thousands of students on their path to success.',
                   'SEE तयारी, विज्ञान, गणित, र कम्प्युटर विज्ञानको लागि मुक्त अनलाइन शिक्षण मञ्च। हजारौं विद्यार्थीहरूसँग सफलताको पथमा जोडिनुहोस्।'
                 )}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
-                  asChild
-                  className="bg-red-600 text-white hover:bg-red-700 px-8 py-3 font-semibold text-base rounded-lg transition-colors"
-                >
-                  <Link href="/courses">{getText('Explore Courses', 'कोर्सहरू अन्वेषण गर्नुहोस्')}</Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="border-2 border-gray-300 text-gray-900 hover:border-red-600 hover:text-red-600 px-8 py-3 font-semibold text-base rounded-lg transition-all bg-transparent"
-                >
-                  <Link href="/blog">{getText('Read Our Blog', 'हाम्रो ब्लग पढ्नुहोस्')}</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+                  asChi
 
         {/* Rotating Quotes Section - Clean Modern */}
         {quotes.length > 0 && (
