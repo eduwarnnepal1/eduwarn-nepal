@@ -49,9 +49,7 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
-  optimizeFonts: true,
   reactStrictMode: true,
-  swcMinify: true,
 };
 
 export default nextConfig;
