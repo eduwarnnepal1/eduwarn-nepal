@@ -1,99 +1,133 @@
 'use client';
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { LanguageContext } from '@/context/language-context';
-import { createBrowserClient } from '@supabase/ssr';
-import { MessageSquare, Eye, TrendingUp } from 'lucide-react';
+import { MessageSquare, Users, Zap, BookOpen, Code, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
-
-interface Category {
-  id: string;
-  name_en: string;
-  name_ne: string;
-  description_en: string;
-  description_ne: string;
-  thread_count: number;
-  post_count: number;
-  latest_activity: string | null;
-}
 
 export function ForumCategories() {
   const context = useContext(LanguageContext);
   const language = context?.language || 'en';
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
 
   const getText = (en: string, ne: string) => (language === 'ne' ? ne : en);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await supabase
-          .from('forum_categories')
-          .select(`
-            id,
-            name_en,
-            name_ne,
-            description_en,
-            description_ne,
-            thread_count,
-            post_count,
-            latest_activity
-          `)
-          .order('order_index', { ascending: true });
-
-        if (data) setCategories(data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCategories();
-  }, [supabase]);
-
-  if (loading) {
-    return <div className="text-center py-8 text-gray-500">Loading categories...</div>;
-  }
+  const categories = [
+    {
+      id: 'general',
+      icon: MessageSquare,
+      name_en: 'General Discussion',
+      name_ne: 'सामान्य छलफल',
+      description_en: 'Share your thoughts and ideas with the community',
+      description_ne: 'समुदायसँग आपनो विचार र विचार साझा गर्नुहोस्',
+      threads: 245,
+      posts: 892,
+      color: 'bg-blue-50 border-blue-200',
+      iconColor: 'text-blue-600',
+    },
+    {
+      id: 'see-prep',
+      icon: BookOpen,
+      name_en: 'SEE Preparation',
+      name_ne: 'SEE तयारी',
+      description_en: 'Tips, strategies, and resources for SEE exams',
+      description_ne: 'SEE परीक्षाका लागि सुझाव, रणनीति र संसाधनहरू',
+      threads: 156,
+      posts: 634,
+      color: 'bg-green-50 border-green-200',
+      iconColor: 'text-green-600',
+    },
+    {
+      id: 'science',
+      icon: Zap,
+      name_en: 'Science & Math',
+      name_ne: 'विज्ञान र गणित',
+      description_en: 'Study help for physics, chemistry, biology, and mathematics',
+      description_ne: 'भौतिकी, रसायन विज्ञान, जीवविज्ञान र गणितको लागि अध्ययन सहायता',
+      threads: 189,
+      posts: 756,
+      color: 'bg-purple-50 border-purple-200',
+      iconColor: 'text-purple-600',
+    },
+    {
+      id: 'coding',
+      icon: Code,
+      name_en: 'Computer Science',
+      name_ne: 'कम्प्युटर विज्ञान',
+      description_en: 'Programming, coding challenges, and tech questions',
+      description_ne: 'प्रोग्रामिङ, कोडिङ चुनौतीहरू र प्रविधि प्रश्नहरू',
+      threads: 128,
+      posts: 512,
+      color: 'bg-orange-50 border-orange-200',
+      iconColor: 'text-orange-600',
+    },
+    {
+      id: 'careers',
+      icon: Users,
+      name_en: 'Career Guidance',
+      name_ne: 'करियर मार्गदर्शन',
+      description_en: 'Discuss career paths, colleges, and opportunities',
+      description_ne: 'करियर मार्ग, कलेज र अवसरहरूको बारेमा छलफल गर्नुहोस्',
+      threads: 98,
+      posts: 425,
+      color: 'bg-red-50 border-red-200',
+      iconColor: 'text-red-600',
+    },
+    {
+      id: 'faq',
+      icon: HelpCircle,
+      name_en: 'FAQs & Help',
+      name_ne: 'सामान्य प्रश्नहरू र सहायता',
+      description_en: 'Answers to common questions and platform guidance',
+      description_ne: 'सामान्य प्रश्नहरूको उत्तर र मञ्च मार्गदर्शन',
+      threads: 45,
+      posts: 189,
+      color: 'bg-indigo-50 border-indigo-200',
+      iconColor: 'text-indigo-600',
+    },
+  ];
 
   return (
-    <div className="space-y-4">
-      {categories.map((category) => (
-        <Link key={category.id} href={`/forum/category/${category.id}`}>
-          <Card className="p-6 hover:shadow-md transition-all cursor-pointer border-gray-200">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {getText(category.name_en, category.name_ne)}
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  {getText(category.description_en, category.description_ne)}
-                </p>
-                <div className="flex items-center gap-6 text-xs text-gray-500">
-                  <div className="flex items-center gap-1">
-                    <MessageSquare className="w-4 h-4" />
-                    {category.thread_count} {getText('threads', 'थ्रेडहरू')}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Eye className="w-4 h-4" />
-                    {category.post_count} {getText('posts', 'पोस्टहरू')}
-                  </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {categories.map((category) => {
+        const Icon = category.icon;
+        return (
+          <Link key={category.id} href={`/forum/category/${category.id}`}>
+            <Card className={`h-full p-6 ${category.color} hover:shadow-lg transition-all cursor-pointer border-2`}>
+              <div className="flex items-start gap-4 mb-4">
+                <div className={`p-3 rounded-lg ${category.color.split(' ')[0]} bg-opacity-100`}>
+                  <Icon className={`w-6 h-6 ${category.iconColor}`} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-gray-900">
+                    {getText(category.name_en, category.name_ne)}
+                  </h3>
                 </div>
               </div>
-              <div className="text-right ml-4">
-                <TrendingUp className="w-5 h-5 text-red-600" />
+
+              <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                {getText(category.description_en, category.description_ne)}
+              </p>
+
+              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                <div className="flex items-center gap-4 text-xs">
+                  <div className="flex items-center gap-1 text-gray-600">
+                    <MessageSquare className="w-4 h-4" />
+                    <span className="font-semibold">{category.threads}</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-gray-600">
+                    <Users className="w-4 h-4" />
+                    <span className="font-semibold">{category.posts}</span>
+                  </div>
+                </div>
+                <div className="text-xs font-semibold text-red-600 hover:text-red-700">
+                  {getText('View', 'हेर्नुहोस्')} →
+                </div>
               </div>
-            </div>
-          </Card>
-        </Link>
-      ))}
+            </Card>
+          </Link>
+        );
+      })}
     </div>
   );
 }

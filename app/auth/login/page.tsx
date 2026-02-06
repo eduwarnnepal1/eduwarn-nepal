@@ -14,7 +14,7 @@ import Link from "next/link"
 import { useLanguage } from "@/context/language-context"
 import { Navbar } from "@/components/navbar"
 import { AlertCircle, Loader2 } from "lucide-react"
-import { t } from "@/i18n" // Declare the t variable here
+import { t } from "@/utils/translation"
 
 export default function LoginPage() {
   const router = useRouter()
