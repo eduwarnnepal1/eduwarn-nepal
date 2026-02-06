@@ -114,7 +114,7 @@ export default function Home() {
                 </span>
               </div>
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
-                {getText('Learn. Grow. Succeed.', 'सिक्नुहोस्। बढ्नुहोस्। सफल होनुहोस्।')}
+                {getText('Learn. Grow. Decide.', 'सिक्नुहोस्। बढ्नुहोस्। निर्णय गर्नुहोस्')}
               </h1>
               <p className="text-xl text-gray-600 mb-8 max-w-2xl leading-relaxed">
                 {getText(
