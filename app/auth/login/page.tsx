@@ -14,7 +14,6 @@ import Link from "next/link"
 import { useLanguage } from "@/context/language-context"
 import { Navbar } from "@/components/navbar"
 import { AlertCircle, Loader2 } from "lucide-react"
-import { t } from "@/utils/translation"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -98,7 +97,7 @@ export default function LoginPage() {
             <div className="relative">
               <Separator />
               <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-xs text-muted-foreground">
-                {t("OR")}
+                {getText("OR","वा")}
               </span>
             </div>
 
