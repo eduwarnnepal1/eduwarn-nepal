@@ -107,17 +107,6 @@ export default function Home() {
         {/* Hero Section - Modern Clean Design */}
         <Hero />
 
-
-
-getText(
-                  'Free online learning platform for SEE preparation, science, mathematics, and computer science. Join thousands of students on their path to success.',
-                  'SEE तयारी, विज्ञान, गणित, र कम्प्युटर विज्ञानको लागि मुक्त अनलाइन शिक्षण मञ्च। हजारौं विद्यार्थीहरूसँग सफलताको पथमा जोडिनुहोस्।'
-                )}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  asChi
-
         {/* Rotating Quotes Section - Clean Modern */}
         {quotes.length > 0 && (
           <section className="bg-gray-50 py-16 border-y border-gray-200">
